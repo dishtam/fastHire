@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/fasthire}
+    username: ${DB_USER:fasthire}
+    password: ${DB_PASSWORD:fasthire}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+fasthire:
+  profile-path: ${PROFILE_PATH:profile.yml}
+  sources-path: ${SOURCES_PATH:sources.xlsx}
+  scoring:
+    threshold: 70
+  schedule:
+    cron: "0 0 7 * * *"
+  anthropic:
+    api-key: ${ANTHROPIC_API_KEY:}
+  telegram:
+    bot-token: ${TELEGRAM_BOT_TOKEN:}
+    chat-id: ${TELEGRAM_CHAT_ID:}

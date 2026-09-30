@@ -1,0 +1,41 @@
+# Dummy profile. Copy to profile.yml and replace with real data.
+name: Alex Sample
+headline: Backend Engineer, Java / Spring Boot
+contact:
+  email: alex@example.com
+  phone: "+00 000 000 0000"
+  linkedin: https://linkedin.com/in/alex-sample
+  location: Bengaluru, India
+summary: Backend engineer with 4 years building payment and order-processing services.
+
+skills:
+  languages: [Java, SQL, Python]
+  frameworks: [Spring Boot, Hibernate]
+  tools: [Docker, Kafka, PostgreSQL, Redis, AWS]
+
+experience:
+  - company: Example Corp
+    title: Software Engineer
+    dates: 2022-06 to present
+    bullets:
+      - id: ex-1
+        text: Cut API p95 latency from 800ms to 220ms by adding Redis caching
+        tags: [performance, redis, java]
+      - id: ex-2
+        text: Built Kafka consumers processing 2M events per day
+        tags: [kafka, scale]
+      - id: ex-3
+        text: Migrated a monolith billing module to Spring Boot services with zero downtime
+        tags: [spring-boot, migration]
+
+projects:
+  - name: Order Tracker
+    bullets:
+      - id: ot-1
+        text: Built a REST API with Spring Boot and PostgreSQL serving 50 req/s
+        tags: [spring-boot, postgres]
+
+education:
+  - school: Example University
+    degree: B.Tech, Computer Science
+    year: 2022
