@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/fasthire}
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/fasthire}
     username: ${DB_USER:fasthire}
     password: ${DB_PASSWORD:fasthire}
   jpa:
