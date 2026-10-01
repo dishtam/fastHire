@@ -1,6 +1,9 @@
 package com.fasthire.scrape;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -51,7 +54,18 @@ public class ScrapeService {
         try {
             List<RawJob> jobs = scraper.fetch(ref);
             found = jobs.size();
-            for (RawJob j : jobs) {
+            Set<String> known = new HashSet<>(jdbc.queryForList(
+                "SELECT external_id FROM job WHERE source_id = ?", String.class, ref.id()));
+            for (RawJob listed : jobs) {
+                if (known.contains(listed.externalId())) {
+                    continue;
+                }
+                RawJob j = listed;
+                try {
+                    j = scraper.enrich(ref, listed);
+                } catch (IOException e) {
+                    log.warn("Could not fetch description for {} job {}: {}", ref.atsType(), listed.externalId(), e.getMessage());
+                }
                 List<Long> ids = jdbc.queryForList("""
                     INSERT INTO job (source_id, external_id, employer_name, title, location, description, url, posted_at)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)

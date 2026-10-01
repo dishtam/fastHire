@@ -8,4 +8,9 @@ public interface JobSource {
     String atsType();
 
     List<RawJob> fetch(SourceRef source) throws IOException;
+
+    /** Optional second call for the full description, made only for jobs not yet stored. */
+    default RawJob enrich(SourceRef source, RawJob job) throws IOException {
+        return job;
+    }
 }

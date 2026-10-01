@@ -1,0 +1,9 @@
+{"status":200,"error":{"message":"","body":""},
+ "data":{"positions":[
+  {"id":563431014933815,"displayJobId":"213469","name":"Fiber Engineer",
+   "locations":["Gurgaon,India","Pune, Maharashtra, India"],
+   "standardizedLocations":["Gurugram, HR, IN","Pune, MH, IN"],
+   "postedTs":1790010547,"department":null,"workLocationOption":"hybrid",
+   "atsJobId":"213469","positionUrl":"/careers/job/563431014933815"}],
+  "count":1,"sortBy":"relevance"},
+ "metadata":null}
