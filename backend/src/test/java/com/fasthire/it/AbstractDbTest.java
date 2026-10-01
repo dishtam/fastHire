@@ -41,7 +41,7 @@ public abstract class AbstractDbTest {
 
     @BeforeEach
     void clean() {
-        jdbc.execute("TRUNCATE draft_message, job_status, job_score, scrape_run, job, contact, source RESTART IDENTITY CASCADE");
+        jdbc.execute("TRUNCATE draft_message, job_status, job_score, scrape_run, tailored_resume, processed_email, job, contact, source RESTART IDENTITY CASCADE");
     }
 
     protected long insertSource(String region, String url, String kind, String atsType, String token) {

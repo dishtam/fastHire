@@ -1,5 +1,6 @@
 package com.fasthire.pipeline;
 
+import com.fasthire.alerts.AlertIngestService;
 import com.fasthire.drafting.DraftService;
 import com.fasthire.notify.DigestFormatter;
 import com.fasthire.notify.Notifier;
@@ -21,13 +22,16 @@ public class DailyPipeline {
     public record Result(int newJobs, int matches) {}
 
     private final ScrapeService scrape;
+    private final AlertIngestService alerts;
     private final ScoringService scoring;
     private final DraftService drafts;
     private final Notifier notifier;
     private final AtomicBoolean running = new AtomicBoolean(false);
 
-    public DailyPipeline(ScrapeService scrape, ScoringService scoring, DraftService drafts, Notifier notifier) {
+    public DailyPipeline(ScrapeService scrape, AlertIngestService alerts, ScoringService scoring, DraftService drafts,
+                         Notifier notifier) {
         this.scrape = scrape;
+        this.alerts = alerts;
         this.scoring = scoring;
         this.drafts = drafts;
         this.notifier = notifier;
@@ -44,6 +48,11 @@ public class DailyPipeline {
         }
         try {
             List<Long> newIds = scrape.scrapeAll();
+            try {
+                alerts.ingest();
+            } catch (Exception e) {
+                log.warn("Alert email ingestion failed: {}", e.getMessage());
+            }
             List<ScoredJob> hits = scoring.scoreJobs(scoring.unscoredJobIds());
             drafts.draftMissing();
             try {
