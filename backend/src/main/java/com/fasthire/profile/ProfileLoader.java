@@ -13,6 +13,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import com.fasthire.resume.ResumeProfile;
 import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
 
@@ -23,27 +24,49 @@ public class ProfileLoader {
 
     private final String configuredPath;
     private Profile cached;
+    private ResumeProfile resume;
+    private String hash;
 
     public ProfileLoader(@Value("${fasthire.profile-path:profile.yml}") String configuredPath) {
         this.configuredPath = configuredPath;
     }
 
     public synchronized Profile get() {
-        if (cached == null) {
-            cached = load();
-        }
+        ensureLoaded();
         return cached;
     }
 
-    private Profile load() {
+    /** The full structured profile, used to build tailored resumes. */
+    public synchronized ResumeProfile resume() {
+        ensureLoaded();
+        return resume;
+    }
+
+    /** SHA-256 of the profile file; tailored resumes are cached per (job, hash). */
+    public synchronized String hash() {
+        ensureLoaded();
+        return hash;
+    }
+
+    private void ensureLoaded() {
+        if (cached == null) {
+            load();
+        }
+    }
+
+    private void load() {
         List<String> candidates = List.of(configuredPath, "profile.yml", "../profile.yml",
             "../profile.example.yml", "profile.example.yml");
         for (String c : candidates) {
             Path p = Path.of(c);
             if (Files.isRegularFile(p)) {
                 log.info("Loading profile from {}", p.toAbsolutePath());
-                try (InputStream in = Files.newInputStream(p)) {
-                    return parse(in);
+                try {
+                    String text = Files.readString(p);
+                    cached = parse(text);
+                    resume = ResumeProfile.parse(text);
+                    hash = sha256(text);
+                    return;
                 } catch (IOException e) {
                     throw new IllegalStateException("Cannot read profile " + p, e);
                 }
@@ -52,9 +75,26 @@ public class ProfileLoader {
         throw new IllegalStateException("No profile found; copy profile.example.yml to profile.yml");
     }
 
-    @SuppressWarnings("unchecked")
     public static Profile parse(InputStream in) {
-        Map<String, Object> root = new Yaml().load(in);
+        try {
+            return parse(new String(in.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot read profile", e);
+        }
+    }
+
+    private static String sha256(String text) {
+        try {
+            byte[] d = java.security.MessageDigest.getInstance("SHA-256").digest(text.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            return java.util.HexFormat.of().formatHex(d);
+        } catch (java.security.NoSuchAlgorithmException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Profile parse(String yamlText) {
+        Map<String, Object> root = new Yaml().load(yamlText);
         Set<String> keywords = new LinkedHashSet<>();
         StringBuilder text = new StringBuilder();
 

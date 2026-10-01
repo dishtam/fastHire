@@ -27,6 +27,13 @@ curl.exe -X POST localhost:8081/admin/run                              # scrape,
 The same pipeline runs daily at 07:00 IST. Settings live in `.env` (see `.env.example`); `SCORING_THRESHOLD` sets
 the minimum fit score for the digest and for drafting messages (default 70).
 
+## Tailored resume
+The dashboard's **Download resume** button builds a single-column, ATS-friendly PDF for that job from your
+`profile.yml`. The model only chooses and orders your existing bullets and may lightly rephrase them; every
+rewrite is checked against the original and discarded if it adds a skill, technology or number the original
+did not contain. The selection is cached per (job, profile version), so repeat downloads are instant.
+Put real URLs in `contact.linkedin` / `contact.github` to have them printed (placeholder words are skipped).
+
 ## Tests
 `cd backend && mvn test`. Integration tests use Testcontainers, so Docker must be running; set `TEST_DB_URL`
 to use an existing empty Postgres instead.

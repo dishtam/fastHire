@@ -18,6 +18,7 @@ public abstract class AbstractDbTest {
 
     @DynamicPropertySource
     static void datasource(DynamicPropertyRegistry r) {
+        r.add("fasthire.profile-path", () -> "src/test/resources/fixtures/profile_test.yml");
         String url = System.getenv("TEST_DB_URL");
         if (url != null && !url.isBlank()) {
             r.add("spring.datasource.url", () -> url);

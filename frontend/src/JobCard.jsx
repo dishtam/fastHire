@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import {
-  Box, Button, Card, CardContent, Chip, Collapse, FormControl, IconButton, Link, MenuItem, Select,
-  Stack, Tooltip, Typography,
+  Box, Button, Card, CardContent, Chip, CircularProgress, Collapse, FormControl, IconButton, Link, MenuItem,
+  Select, Stack, Tooltip, Typography,
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DownloadIcon from '@mui/icons-material/Download';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { copyText } from './copy.js';
+import { downloadResume } from './api.js';
 
 export const STATUSES = ['NEW', 'APPLIED', 'REFERRED', 'INTERVIEW'];
 
@@ -16,11 +17,23 @@ function scoreColor(score) {
   return 'default';
 }
 
-export default function JobCard({ job, onStatusChange, onCopied }) {
+export default function JobCard({ job, onStatusChange, onNotice }) {
   const [open, setOpen] = useState(false);
+  const [building, setBuilding] = useState(false);
   const hasDrafts = Boolean(job.hiringManagerMessage && job.employeeMessage);
 
-  const copy = async (text, label) => onCopied(await copyText(text) ? `${label} copied` : 'Copy failed');
+  const copy = async (text, label) => onNotice(await copyText(text) ? `${label} copied` : 'Copy failed');
+
+  const download = async () => {
+    setBuilding(true);
+    try {
+      await downloadResume(job.id);
+    } catch (e) {
+      onNotice(`Could not build resume: ${e.message}`);
+    } finally {
+      setBuilding(false);
+    }
+  };
 
   return (
     <Card variant="outlined" sx={{ mb: 2 }}>
@@ -57,10 +70,13 @@ export default function JobCard({ job, onStatusChange, onCopied }) {
         <Typography variant="body2" sx={{ mt: 1.5 }}>{job.reason}</Typography>
 
         <Stack direction="row" sx={{ mt: 2, gap: 1, flexWrap: 'wrap', alignItems: 'center' }}>
-          <Tooltip title="Tailored resume arrives in a later phase">
+          <Tooltip title="Builds a PDF tailored to this job from your profile (takes a few seconds)">
             <span>
-              <Button size="small" variant="outlined" startIcon={<DownloadIcon />} disabled>
-                Download resume
+              <Button
+                size="small" variant="outlined" disabled={building} onClick={download}
+                startIcon={building ? <CircularProgress size={16} /> : <DownloadIcon />}
+              >
+                {building ? 'Building resume...' : 'Download resume'}
               </Button>
             </span>
           </Tooltip>

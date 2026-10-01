@@ -1,0 +1,58 @@
+# Fictional profile used only by tests.
+name: Alex Sample
+headline: Backend Software Engineer
+contact:
+  email: alex@example.com
+  phone: "+00 000 000 0000"
+  linkedin: https://linkedin.com/in/alex-sample
+  github: GitHub
+  location: Pune, India
+summary: Backend engineer with 4 years building payment services in Java and Spring Boot.
+
+skills:
+  languages: [Java, Python, SQL]
+  backend: [Spring Boot, REST APIs, Microservices, Kafka, Redis]
+  cloud_devops: [AWS, Docker, CI/CD]
+
+experience:
+  - company: Example Corp
+    title: Software Engineer
+    dates: 2022-06 - Present
+    location: Pune, India
+    bullets:
+      - id: ex-1
+        text: Cut API p95 latency from 800ms to 220ms by adding Redis caching
+        tags: [performance, redis, java]
+      - id: ex-2
+        text: Built Kafka consumers processing 2M events per day
+        tags: [kafka, scale]
+      - id: ex-3
+        text: Migrated a monolith billing module to Spring Boot services with zero downtime
+        tags: [spring boot, migration]
+  - company: Acme Ltd
+    title: Intern
+    dates: 2021-06 - 2021-12
+    location: Remote
+    bullets:
+      - id: ac-1
+        text: Wrote unit tests with JUnit that raised coverage from 40% to 70%
+        tags: [junit, testing]
+
+projects:
+  - name: Order Tracker
+    bullets:
+      - id: ot-1
+        text: Built a REST API with Spring Boot and PostgreSQL serving 50 req/s
+        tags: [spring boot, postgres]
+      - id: ot-2
+        text: Deployed the service to AWS using Docker
+        tags: [aws, docker]
+
+education:
+  - school: Example University
+    degree: B.Tech, Computer Science
+    year: 2018 - 2022
+    cgpa: "8.5"
+
+achievements:
+  - Top 5% on a competitive programming site

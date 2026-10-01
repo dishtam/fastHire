@@ -56,7 +56,7 @@ export default function App() {
         </Typography>
       )}
       {jobs && jobs.map((job) => (
-        <JobCard key={job.id} job={job} onStatusChange={changeStatus} onCopied={setToast} />
+        <JobCard key={job.id} job={job} onStatusChange={changeStatus} onNotice={setToast} />
       ))}
 
       <Typography variant="h6" component="h2" sx={{ mt: 5, mb: 1 }}>Sources</Typography>
