@@ -16,7 +16,7 @@ fasthire:
   profile-path: ${PROFILE_PATH:../profile.yml}
   sources-path: ${SOURCES_PATH:sources.xlsx}
   scoring:
-    threshold: 70
+    threshold: ${SCORING_THRESHOLD:70}
   schedule:
     cron: "0 0 7 * * *"
   openai:
