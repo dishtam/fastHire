@@ -47,7 +47,8 @@ public class GreenhouseJobSource implements JobSource {
                 j.path("location").path("name").asText(null),
                 Html.toText(org.jsoup.parser.Parser.unescapeEntities(j.path("content").asText(""), false)),
                 j.path("absolute_url").asText(null),
-                posted));
+                posted,
+                j.path("id").asText()));
         }
         return out;
     }

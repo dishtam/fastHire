@@ -81,7 +81,8 @@ public class EightfoldJobSource implements JobSource {
             String text = data.path(f).asText("");
             if (!text.isBlank()) {
                 return new RawJob(job.externalId(), job.employerName(), job.title(), job.location(),
-                    job.description() + "\n\n" + stripPlaceholders(Html.toText(text)), job.url(), job.postedAt());
+                    job.description() + "\n\n" + stripPlaceholders(Html.toText(text)), job.url(), job.postedAt(),
+                    job.displayId());
             }
         }
         return job;
@@ -114,7 +115,8 @@ public class EightfoldJobSource implements JobSource {
             String.join("; ", locs),
             mode.isEmpty() ? "" : "Work mode: " + mode,
             url.isEmpty() ? null : "https://" + host + url,
-            ts > 0 ? Instant.ofEpochSecond(ts) : null);
+            ts > 0 ? Instant.ofEpochSecond(ts) : null,
+            p.path("displayJobId").asText(null));
     }
 
     private static Map<String, String> sourceParams(String url) {

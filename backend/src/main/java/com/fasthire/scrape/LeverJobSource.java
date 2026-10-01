@@ -47,7 +47,8 @@ public class LeverJobSource implements JobSource {
                 j.path("categories").path("location").asText(null),
                 desc.trim(),
                 j.path("hostedUrl").asText(null),
-                created > 0 ? Instant.ofEpochMilli(created) : null));
+                created > 0 ? Instant.ofEpochMilli(created) : null,
+                null));
         }
         return out;
     }

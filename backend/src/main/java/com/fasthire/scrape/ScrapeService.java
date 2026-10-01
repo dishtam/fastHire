@@ -67,12 +67,13 @@ public class ScrapeService {
                     log.warn("Could not fetch description for {} job {}: {}", ref.atsType(), listed.externalId(), e.getMessage());
                 }
                 List<Long> ids = jdbc.queryForList("""
-                    INSERT INTO job (source_id, external_id, employer_name, title, location, description, url, posted_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    INSERT INTO job (source_id, external_id, employer_name, title, location, description, url, posted_at, display_id)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     ON CONFLICT (source_id, external_id) DO NOTHING
                     RETURNING id
                     """, Long.class, ref.id(), j.externalId(), j.employerName(), j.title(), j.location(),
-                    j.description(), j.url(), j.postedAt() == null ? null : java.sql.Timestamp.from(j.postedAt()));
+                    j.description(), j.url(), j.postedAt() == null ? null : java.sql.Timestamp.from(j.postedAt()),
+                    j.displayId());
                 inserted.addAll(ids);
             }
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.fasthire.pipeline;
 
+import com.fasthire.drafting.DraftService;
 import com.fasthire.notify.DigestFormatter;
 import com.fasthire.notify.Notifier;
 import com.fasthire.scoring.ScoredJob;
@@ -21,12 +22,14 @@ public class DailyPipeline {
 
     private final ScrapeService scrape;
     private final ScoringService scoring;
+    private final DraftService drafts;
     private final Notifier notifier;
     private final AtomicBoolean running = new AtomicBoolean(false);
 
-    public DailyPipeline(ScrapeService scrape, ScoringService scoring, Notifier notifier) {
+    public DailyPipeline(ScrapeService scrape, ScoringService scoring, DraftService drafts, Notifier notifier) {
         this.scrape = scrape;
         this.scoring = scoring;
+        this.drafts = drafts;
         this.notifier = notifier;
     }
 
@@ -42,6 +45,7 @@ public class DailyPipeline {
         try {
             List<Long> newIds = scrape.scrapeAll();
             List<ScoredJob> hits = scoring.scoreJobs(scoring.unscoredJobIds());
+            drafts.draftMissing();
             try {
                 notifier.send(DigestFormatter.format(hits));
             } catch (Exception e) {
