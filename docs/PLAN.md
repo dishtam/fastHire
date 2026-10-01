@@ -52,3 +52,7 @@ Config via application.yml + env (ANTHROPIC_API_KEY, Telegram, DB). Keyword filt
 
 ## Risks
 Custom career sites (visible as UNSUPPORTED, build on demand); Workday/Eightfold endpoint changes (isolated classes, fixtures); LLM score drift (fixed rubric, stored reasons); resume fabrication (id-based selection + server validation); site terms (official JSON endpoints, low request rate).
+
+## Implementation notes
+- LLM provider is behind `LlmClient`; OpenAI (`OPENAI_API_KEY`, `OPENAI_MODEL`, default gpt-4o-mini) is the current implementation, replacing the Claude API assumed above.
+- `POST /admin/run` runs the whole pipeline (scrape, score unscored jobs, Telegram digest); the same pipeline runs daily at 07:00 IST.

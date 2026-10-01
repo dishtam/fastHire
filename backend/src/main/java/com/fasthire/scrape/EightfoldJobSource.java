@@ -81,10 +81,24 @@ public class EightfoldJobSource implements JobSource {
             String text = data.path(f).asText("");
             if (!text.isBlank()) {
                 return new RawJob(job.externalId(), job.employerName(), job.title(), job.location(),
-                    job.description() + "\n\n" + Html.toText(text), job.url(), job.postedAt());
+                    job.description() + "\n\n" + stripPlaceholders(Html.toText(text)), job.url(), job.postedAt());
             }
         }
         return job;
+    }
+
+    /** Drops unfilled template tokens like [[reqLocation]]; a line left with only a label ("Location:") is removed. */
+    static String stripPlaceholders(String text) {
+        StringBuilder out = new StringBuilder();
+        for (String line : text.split("\n", -1)) {
+            String cleaned = line.replaceAll("\\[\\[[^\\]]*\\]\\]", "").stripTrailing();
+            boolean hadToken = !cleaned.equals(line.stripTrailing());
+            if (hadToken && (cleaned.isBlank() || cleaned.endsWith(":"))) {
+                continue;
+            }
+            out.append(cleaned).append('\n');
+        }
+        return out.toString().replaceAll("\n{3,}", "\n\n").trim();
     }
 
     private static RawJob toJob(JsonNode p, String host, String employer) {

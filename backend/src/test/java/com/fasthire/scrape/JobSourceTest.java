@@ -68,4 +68,10 @@ class JobSourceTest {
         assertThat(j.description()).contains("hybrid");
         assertThat(j.postedAt()).isEqualTo(java.time.Instant.ofEpochSecond(1790010547L));
     }
+
+    @Test
+    void eightfoldStripsUnfilledTemplateTokens() {
+        String in = "Intro\n\nLocation: [[reqLocation]]\nTravel: Minimal\nRelocation: [[filter14]]\nEnd";
+        assertThat(EightfoldJobSource.stripPlaceholders(in)).isEqualTo("Intro\n\nTravel: Minimal\nEnd");
+    }
 }
