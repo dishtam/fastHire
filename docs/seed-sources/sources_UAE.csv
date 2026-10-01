@@ -1,0 +1,39 @@
+url,label,enabled,category,fit_note,pay_evidence,verified
+https://job-boards.greenhouse.io/careem?location=Dubai|UAE,Careem,True,Consumer tech,Staff/Senior backend seen; Java/Golang; relocation to Dubai,,search-confirmed
+https://job-boards.greenhouse.io/cobblestoneenergy?location=Dubai|UAE,Cobblestone Energy,True,Energy trading tech,Software Engineer / Graduate SE (Dubai); visa + relocation,USD 60-65k graduate SE listed (tax-free),search-confirmed
+https://job-boards.greenhouse.io/cobblestoneenergy4?location=Dubai|UAE,Cobblestone Energy (board 2),True,Energy trading tech,Software Engineer / Graduate SE (Dubai),USD 60-65k graduate SE listed (tax-free),search-confirmed
+https://job-boards.greenhouse.io/propertyfinder?location=Dubai|UAE,Property Finder,True,Proptech,Uses Greenhouse; board slug unverified (first scrape will confirm),,from memory
+https://jobs.lever.co/binance?location=Dubai|UAE,Binance,True,Crypto,Backend Engineer Java Web3 Wallet (Dubai),,search-confirmed
+https://jobs.lever.co/1inch?location=Dubai|UAE,1inch,True,Crypto,Backend Software Engineer (Dubai),,search-confirmed
+https://jobs.lever.co/palantir?location=Abu Dhabi|Dubai|UAE,Palantir,True,Software,Senior roles seen: Forward Deployed SE (Abu Dhabi),,search-confirmed
+https://jobs.lever.co/Washmen,Washmen,True,Consumer tech,"Senior roles seen: Senior SE 7+ yrs (remote, UAE company)",,search-confirmed
+https://jobs.ashbyhq.com/syndica,Syndica,True,Crypto infra,Rust/Go SE 3+ yrs (Dubai),,search-confirmed
+https://careers.smartrecruiters.com/DeliveryHero?search=Dubai,Delivery Hero (talabat),True,Consumer tech,"Entry/mid role seen: SE I Backend, SE Emirati-only, SE II (Dubai); .NET/Go/C# stacks",,search-confirmed
+https://careers.smartrecruiters.com/EtihadAirways5,Etihad Airways,True,Aviation,Senior roles seen: Software Development Lead (Abu Dhabi),,search-confirmed
+https://careers.smartrecruiters.com/masdar,Masdar,True,Energy,Abu Dhabi roles,,search-confirmed
+https://careers.smartrecruiters.com/VAMS,VAM Systems,True,IT services (UAE),Java/MicroStrategy/other IT roles for UAE; sponsors visas,,search-confirmed
+https://careers.smartrecruiters.com/GhobashGroup,Ghobash Group,True,Conglomerate IT,Data & AI / services engineer roles (Dubai),,search-confirmed
+https://apply.workable.com/bayutdubizzle/,Bayut & dubizzle,True,Proptech / classifieds,Technology roles; Workable board,,search-confirmed
+https://careers.deliveryhero.com,Delivery Hero careers (talabat jobs),True,Consumer tech,"SE II Backend, Eng Managers (Dubai)",,search-confirmed
+https://www.emiratesnbd.com/en/careers,Emirates NBD,True,Banking,Software/data/digital roles; many programmes are UAE-national only,,search-confirmed
+https://www.emiratesgroupcareers.com,Emirates Group,True,Aviation,"IT hiring drives reported (Java full stack, .NET, Python)",,from memory
+https://careers.adnoc.ae,ADNOC,True,Energy,Not checked: careers page from memory,,from memory
+https://www.bankfab.com/en-ae/about-fab/careers,First Abu Dhabi Bank,True,Banking,Not checked: careers page from memory,,from memory
+https://www.majidalfuttaim.com/en/careers,Majid Al Futtaim,True,Retail / tech,Not checked: careers page from memory,,from memory
+https://careers.microsoft.com,Microsoft (UAE roles),True,Software,Not checked: careers page from memory,,from memory
+https://careers.oracle.com,Oracle (UAE roles),True,Software,Not checked: careers page from memory,,from memory
+https://jobs.sap.com,SAP (UAE roles),True,Software,Not checked: careers page from memory,,from memory
+https://jobs.cisco.com,Cisco (UAE roles),True,Networking,Not checked: careers page from memory,,from memory
+https://www.ibm.com/careers,IBM (UAE roles),True,Software,Not checked: careers page from memory,,from memory
+https://www.amazon.jobs/en/locations/united-arab-emirates,Amazon / AWS UAE,True,Software,Not checked: careers page from memory,,from memory
+https://www.bayt.com/en/uae/jobs/,Bayt UAE,True,Job board,Job board: read through email alerts (never scraped),,known site
+https://www.naukrigulf.com,Naukrigulf,True,Job board,Job board: read through email alerts (never scraped),,known site
+https://ae.linkedin.com/jobs,LinkedIn Jobs UAE,True,Job board,Job board: read through email alerts (never scraped),,known site
+https://www.gulftalent.com/uae/jobs,GulfTalent UAE,True,Job board,Job board: read through email alerts (never scraped),,known site
+https://ae.indeed.com,Indeed UAE,True,Job board,Job board: read through email alerts (never scraped),,known site
+https://www.laimoon.com/uae,Laimoon UAE,True,Job board,Job board: read through email alerts (never scraped),,known site
+https://www.talentmate.com/jobs/uae,TalentMate UAE,True,Job board,Job board: read through email alerts (never scraped),,known site
+https://ae.mustakbil.com,Mustakbil UAE,True,Job board,Job board: read through email alerts (never scraped),,known site
+https://www.monstergulf.com,Monster Gulf,True,Job board,Job board: read through email alerts (never scraped),,known site
+https://relocate.me/united-arab-emirates,Relocate.me UAE,True,Job board (visa-sponsored),Job board: read through email alerts (never scraped),,known site
+https://wellfound.com/jobs,Wellfound (remote/UAE startups),True,Job board,Job board: read through email alerts (never scraped),,known site
