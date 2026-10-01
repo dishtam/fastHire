@@ -71,4 +71,14 @@ class ScrapeServiceIT extends AbstractDbTest {
         assertThat(row).containsEntry("title", "Fiber Engineer").containsEntry("display_id", "213469");
         assertThat((String) row.get("description")).contains("hybrid");
     }
+
+    @Test
+    void aLocationFilterInTheSourceUrlKeepsOnlyThatPlacesJobs() throws Exception {
+        insertSource("UAE", "https://jobs.lever.co/acme?location=Abu%20Dhabi", "ATS", "LEVER", "acme");
+        when(fetcher.get(contains("lever"))).thenReturn(fixture("lever.json"));
+
+        assertThat(scrape.scrapeAll()).hasSize(1); // fixture has an Abu Dhabi job and one with no location
+        assertThat(jdbc.queryForObject("select location from job", String.class)).isEqualTo("Abu Dhabi");
+        assertThat(jdbc.queryForObject("select jobs_found from scrape_run", Integer.class)).isEqualTo(1);
+    }
 }

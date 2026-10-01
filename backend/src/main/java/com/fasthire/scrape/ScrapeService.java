@@ -52,7 +52,7 @@ public class ScrapeService {
         String error = null;
         int found = 0;
         try {
-            List<RawJob> jobs = scraper.fetch(ref);
+            List<RawJob> jobs = LocationFilter.apply(ref, scraper.fetch(ref));
             found = jobs.size();
             Set<String> known = new HashSet<>(jdbc.queryForList(
                 "SELECT external_id FROM job WHERE source_id = ?", String.class, ref.id()));

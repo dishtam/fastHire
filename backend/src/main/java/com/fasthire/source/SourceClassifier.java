@@ -13,7 +13,9 @@ public class SourceClassifier {
 
     private static final List<String> BOARD_DOMAINS = List.of(
         "naukri.com", "naukrigulf.com", "linkedin.com", "indeed.com", "bayt.com",
-        "instahyre.com", "foundit.in", "foundit.ae", "monster.com", "glassdoor.com", "shine.com");
+        "instahyre.com", "foundit.in", "foundit.ae", "monster.com", "glassdoor.com", "shine.com",
+        "wellfound.com", "cutshort.io", "hirist.tech", "timesjobs.com", "techgig.com", "weekday.works",
+        "gulftalent.com", "laimoon.com", "talentmate.com", "mustakbil.com", "monstergulf.com", "relocate.me");
 
     private static final Pattern WORKDAY_HOST =
         Pattern.compile("^([a-z0-9-]+)\\.(wd\\d+)\\.myworkdayjobs\\.com$");
@@ -74,6 +76,8 @@ public class SourceClassifier {
         if (!s.matches("^[a-zA-Z][a-zA-Z0-9+.-]*://.*")) {
             s = "https://" + s;
         }
+        // Sheet URLs may carry unencoded "|" or spaces (e.g. ?location=Dubai|UAE); URI rejects them.
+        s = s.replace(" ", "%20").replace("|", "%7C");
         try {
             return URI.create(s);
         } catch (IllegalArgumentException e) {

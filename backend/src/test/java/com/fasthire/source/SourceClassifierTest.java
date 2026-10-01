@@ -14,6 +14,12 @@ class SourceClassifierTest {
             .isEqualTo("acme");
     }
 
+    @Test void locationFilterInTheUrlDoesNotChangeClassification() {
+        assertThat(c.classify("https://jobs.lever.co/binance?location=Dubai"))
+            .isEqualTo(new Classification(SourceKind.ATS, "LEVER", "binance"));
+        assertThat(c.classify("https://job-boards.greenhouse.io/careem?location=Dubai|UAE").atsToken()).isEqualTo("careem");
+    }
+
     @Test void lever() {
         assertThat(c.classify("https://jobs.lever.co/acme"))
             .isEqualTo(new Classification(SourceKind.ATS, "LEVER", "acme"));
@@ -36,6 +42,8 @@ class SourceClassifierTest {
     @Test void boardsAreEmailOnly() {
         assertThat(c.classify("www.naukri.com").kind()).isEqualTo(SourceKind.BOARD_EMAIL_ONLY);
         assertThat(c.classify("https://in.linkedin.com/jobs").kind()).isEqualTo(SourceKind.BOARD_EMAIL_ONLY);
+        assertThat(c.classify("https://wellfound.com/jobs").kind()).isEqualTo(SourceKind.BOARD_EMAIL_ONLY);
+        assertThat(c.classify("https://www.gulftalent.com/uae/jobs").kind()).isEqualTo(SourceKind.BOARD_EMAIL_ONLY);
     }
 
     @Test void unknownAndGarbageAreUnsupported() {
