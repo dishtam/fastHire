@@ -25,3 +25,17 @@ Eightfold sources already pass their own `location` to the platform.
 ## Extra columns
 Only `url`, `label` and `enabled` are read. Other columns (category, notes, ...) are ignored, so they are safe
 to keep in the sheet for your own use.
+
+## Platforms and their options
+| Platform | Sheet URL looks like | Options |
+|---|---|---|
+| Greenhouse | `https://job-boards.greenhouse.io/<board>` | `?location=` |
+| Lever | `https://jobs.lever.co/<company>` | `?location=` |
+| Ashby | `https://jobs.ashbyhq.com/<company>` | `?location=` (applied after fetching) |
+| SmartRecruiters | `https://careers.smartrecruiters.com/<Company>` | `?search=` (searched by SmartRecruiters), `?location=` |
+| Workday | `https://<tenant>.wd5.myworkdayjobs.com/<Site>` | `?q=` (searched by Workday), `?location=` |
+| Eightfold | `https://jobs.<company>.com/careers?query=...&location=...` | passed through as-is |
+
+Workday tenants can hold thousands of jobs, so always give a `?q=` term (e.g. `q=java`); at most 600 jobs are read
+per tenant per run. Workday shows "2 Locations" for multi-location postings, which a location filter keeps because
+the real places are not known. Combine options with `&`, e.g. `...?q=java&location=Pune|Hyderabad`.

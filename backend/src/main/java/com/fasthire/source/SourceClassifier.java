@@ -59,6 +59,20 @@ public class SourceClassifier {
             }
         }
 
+        if (host.equals("jobs.ashbyhq.com") && !segments.isEmpty()) {
+            return Classification.ats("ASHBY", segments.get(0));
+        }
+
+        if (host.equals("careers.smartrecruiters.com") || host.equals("jobs.smartrecruiters.com")) {
+            // /Company, /Company/123-title, or /oneclick-ui/company/Company/publication/...
+            if (segments.size() >= 3 && segments.get(0).equals("oneclick-ui") && segments.get(1).equals("company")) {
+                return Classification.ats("SMARTRECRUITERS", segments.get(2));
+            }
+            if (!segments.isEmpty() && !segments.get(0).equals("oneclick-ui")) {
+                return Classification.ats("SMARTRECRUITERS", segments.get(0));
+            }
+        }
+
         boolean eightfold = host.endsWith(".eightfold.ai")
             || (path.startsWith("/careers") && (query.contains("pid=") || query.contains("sort_by=")));
         if (eightfold) {

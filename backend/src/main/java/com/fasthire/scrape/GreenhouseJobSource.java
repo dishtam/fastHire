@@ -28,13 +28,13 @@ public class GreenhouseJobSource implements JobSource {
     public List<RawJob> fetch(SourceRef src) throws IOException {
         String body = fetcher.get(
             "https://boards-api.greenhouse.io/v1/boards/" + src.atsToken() + "/jobs?content=true");
-        return parse(mapper.readTree(body), src.atsToken());
+        return parse(mapper.readTree(body), src);
     }
 
-    List<RawJob> parse(JsonNode root, String token) {
+    List<RawJob> parse(JsonNode root, SourceRef src) {
         List<RawJob> out = new ArrayList<>();
         for (JsonNode j : root.path("jobs")) {
-            String employer = j.path("company_name").asText(token);
+            String employer = j.path("company_name").asText(Employer.name(src, src.atsToken()));
             Instant posted = null;
             String updated = j.path("first_published").asText(j.path("updated_at").asText(""));
             if (!updated.isEmpty()) {

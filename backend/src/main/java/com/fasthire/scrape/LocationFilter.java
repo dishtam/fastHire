@@ -41,12 +41,15 @@ final class LocationFilter {
             .filter(s -> !s.isEmpty()).toList();
     }
 
-    /** A job with no stated location cannot be confirmed, so it is dropped when a filter is set. */
+    /** A job with no stated location cannot be confirmed, so it is dropped when a filter is set (multi-location postings are kept). */
     static boolean matches(String location, List<String> terms) {
         if (location == null || location.isBlank()) {
             return false;
         }
         String l = location.toLowerCase(Locale.ROOT);
+        if (l.matches("\\d+\\s+locations?")) {
+            return true; // Workday shows "2 Locations" for multi-location postings; the real places are unknown here
+        }
         return terms.stream().anyMatch(l::contains);
     }
 }

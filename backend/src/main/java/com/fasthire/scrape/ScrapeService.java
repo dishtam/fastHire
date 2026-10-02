@@ -32,9 +32,9 @@ public class ScrapeService {
     /** @return ids of newly inserted jobs, for scoring. */
     public List<Long> scrapeAll() {
         List<SourceRef> refs = jdbc.query(
-            "SELECT id, region, url, ats_type, ats_token FROM source WHERE enabled AND kind = 'ATS'",
+            "SELECT id, region, url, ats_type, ats_token, label FROM source WHERE enabled AND kind = 'ATS'",
             (rs, i) -> new SourceRef(rs.getLong("id"), rs.getString("region"), rs.getString("url"),
-                rs.getString("ats_type"), rs.getString("ats_token")));
+                rs.getString("ats_type"), rs.getString("ats_token"), rs.getString("label")));
         List<Long> newIds = new ArrayList<>();
         for (SourceRef ref : refs) {
             newIds.addAll(scrapeOne(ref));

@@ -15,12 +15,12 @@ def gh(slug, label, cat, note, flt=None, pay="", v=C):
     return (GH + slug + (f"?location={flt}" if flt else ""), label, cat, note, pay, v)
 def lv(slug, label, cat, note, flt=None, pay="", v=C):
     return (LV + slug + (f"?location={flt}" if flt else ""), label, cat, note, pay, v)
-def ash(slug, label, cat, note, pay="", v=C):
-    return (AS + slug, label, cat, note, pay, v)
-def wd(host_site, label, cat, note, v=C):
-    return ("https://" + host_site, label, cat, note, "", v)
-def sr(slug, label, cat, note, v=C):
-    return (SR + slug, label, cat, note, "", v)
+def ash(slug, label, cat, note, pay="", loc=IN_F, v=C):
+    return (AS + slug + f"?location={loc}", label, cat, note, pay, v)
+def wd(host_site, label, cat, note, q="java", loc=IN_F, v=C):
+    return ("https://" + host_site + f"?q={q}&location={loc}", label, cat, note, "", v)
+def sr(company, label, cat, note, search="India", loc="India", v=C):
+    return (SR + company + f"?search={search}&location={loc}", label, cat, note, "", v)
 def mem(url, label, cat, note="Not checked: careers page from memory"):
     return (url, label, cat, note, "", M)
 
@@ -85,8 +85,8 @@ india = [
  wd("ms.wd5.myworkdayjobs.com/External", "Morgan Stanley", "BFSI / GCC", SENIOR + "Director-level Java (Mumbai/Bengaluru)"),
  wd("worldpay.wd5.myworkdayjobs.com/Worldpay_External_Careers_Site", "Worldpay", "Fintech", ENTRY + "Java Spring Boot 2-4 yrs (Pune/Bangalore/Indore)"),
  wd("jda.wd5.myworkdayjobs.com/JDA_Careers", "Blue Yonder (JDA)", "Supply-chain SaaS", "Staff SE Java/microservices/Spring Boot"),
- wd("redhat.wd5.myworkdayjobs.com/Jobs", "Red Hat", "Open source", ENTRY + "Associate SE trainee (Pune), Python-leaning"),
- wd("reliaquest.wd5.myworkdayjobs.com/ReliaQuest_Careers", "ReliaQuest", "Security", ENTRY + "Associate SE 0-1 yrs Java/Spring Boot (Pune)"),
+ wd("redhat.wd5.myworkdayjobs.com/Jobs", "Red Hat", "Open source", ENTRY + "Associate SE trainee (Pune), Python-leaning", q="software+engineer"),
+ wd("reliaquest.wd5.myworkdayjobs.com/ReliaQuest_Careers", "ReliaQuest", "Security", ENTRY + "Associate SE 0-1 yrs Java/Spring Boot (Pune)", q="software+engineer"),
  wd("cdk.wd1.myworkdayjobs.com/CDK", "CDK Global", "Automotive SaaS", ENTRY + "Associate SE Java/Spring (Hyderabad)"),
  wd("web.wd1.myworkdayjobs.com/ExternalCareerSite", "Newfold Digital / Bluehost", "Web hosting", "Java backend SE (Mumbai)"),
  wd("spgi.wd5.myworkdayjobs.com/spgi_internal", "S&P Global", "Fintech data", "Backend Java engineers (Hyderabad)"),
@@ -95,17 +95,17 @@ india = [
  wd("motorolasolutions.wd5.myworkdayjobs.com/Careers", "Motorola Solutions", "Hardware + software", "SE Java/Spring Boot/microservices (Bangalore)"),
  wd("gevernova.wd5.myworkdayjobs.com/Vernova_ExternalSite", "GE Vernova", "Energy tech", "SE Java (Bengaluru)"),
  wd("hitachi.wd1.myworkdayjobs.com/hitachi", "Hitachi", "Conglomerate", "Java roles (Bengaluru)"),
- wd("hpe.wd5.myworkdayjobs.com/ACJobSite", "HPE", "Enterprise IT", "Engineering roles (Bengaluru)"),
- wd("nxp.wd3.myworkdayjobs.com/careers", "NXP Semiconductors", "Embedded", "Embedded firmware/software 3-5 yrs C/C++ (Hyderabad/Noida)"),
- wd("sensata.wd1.myworkdayjobs.com/Sensata-Careers", "Sensata", "Embedded", "Embedded Firmware Engineer (Pune)"),
- wd("hp.wd5.myworkdayjobs.com/ExternalCareerSite", "HP", "Embedded / hardware", "Embedded software / firmware roles"),
+ wd("hpe.wd5.myworkdayjobs.com/ACJobSite", "HPE", "Enterprise IT", "Engineering roles (Bengaluru)", q="software+engineer"),
+ wd("nxp.wd3.myworkdayjobs.com/careers", "NXP Semiconductors", "Embedded", "Embedded firmware/software 3-5 yrs C/C++ (Hyderabad/Noida)", q="embedded"),
+ wd("sensata.wd1.myworkdayjobs.com/Sensata-Careers", "Sensata", "Embedded", "Embedded Firmware Engineer (Pune)", q="embedded"),
+ wd("hp.wd5.myworkdayjobs.com/ExternalCareerSite", "HP", "Embedded / hardware", "Embedded software / firmware roles", q="embedded"),
  # --- SmartRecruiters (no scraper yet)
- sr("servicenow?search=India", "ServiceNow", "SaaS", "India software roles (Hyderabad)"),
+ sr("servicenow", "ServiceNow", "SaaS", "India software roles (Hyderabad)"),
  sr("Visa", "Visa", "Fintech / GCC", "Software Engineer (Bangalore)"),
  sr("Experian", "Experian", "Fintech data / GCC", "Software Engineer Java + AWS 4+ yrs (Hyderabad)"),
  sr("Zscaler", "Zscaler", "Security", "Software Engineer II roles (Bengaluru)"),
- sr("WesternDigital", "Western Digital", "Embedded", ENTRY + "SDE Embedded, freshers batch (Bengaluru)"),
- sr("NECSWS", "NEC Software Solutions", "Software services", "Senior SE Java/Spring Boot/AWS/microservices (Mumbai)"),
+ sr("WesternDigital", "Western Digital", "Embedded", ENTRY + "SDE Embedded, freshers batch (Bengaluru)", search="embedded"),
+ sr("NECSWS", "NEC Software Solutions", "Software services", "Senior SE Java/Spring Boot/AWS/microservices (Mumbai)", search="java"),
  # --- From memory: product / startups
  mem("https://meesho.io/jobs", "Meesho", "E-commerce"),
  mem("https://groww.in/careers", "Groww", "Fintech"),
@@ -161,8 +161,8 @@ india = [
  mem("https://careers.epam.com", "EPAM", "Engineering services"),
  mem("https://careers.publicissapient.com", "Publicis Sapient", "Consulting"),
  # --- From memory: embedded / hardware
- mem("https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite", "NVIDIA", "Embedded / semis"),
- mem("https://cadence.wd1.myworkdayjobs.com/External_Careers", "Cadence", "Embedded / EDA"),
+ mem("https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite?q=embedded&location=" + IN_F, "NVIDIA", "Embedded / semis"),
+ mem("https://cadence.wd1.myworkdayjobs.com/External_Careers?q=software+engineer&location=" + IN_F, "Cadence", "Embedded / EDA"),
  mem("https://careers.ti.com", "Texas Instruments", "Embedded / semis"),
  mem("https://jobs.intel.com", "Intel", "Embedded / semis"),
  mem("https://careers.qualcomm.com", "Qualcomm", "Embedded / semis"),
@@ -197,12 +197,12 @@ uae = [
  lv("1inch", "1inch", "Crypto", "Backend Software Engineer (Dubai)", "Dubai|UAE"),
  lv("palantir", "Palantir", "Software", SENIOR + "Forward Deployed SE (Abu Dhabi)", "Abu Dhabi|Dubai|UAE"),
  lv("Washmen", "Washmen", "Consumer tech", SENIOR + "Senior SE 7+ yrs (remote, UAE company)"),
- ash("syndica", "Syndica", "Crypto infra", "Rust/Go SE 3+ yrs (Dubai)"),
- sr("DeliveryHero?search=Dubai", "Delivery Hero (talabat)", "Consumer tech", ENTRY + "SE I Backend, SE Emirati-only, SE II (Dubai); .NET/Go/C# stacks"),
- sr("EtihadAirways5", "Etihad Airways", "Aviation", SENIOR + "Software Development Lead (Abu Dhabi)"),
- sr("masdar", "Masdar", "Energy", "Abu Dhabi roles"),
- sr("VAMS", "VAM Systems", "IT services (UAE)", "Java/MicroStrategy/other IT roles for UAE; sponsors visas"),
- sr("GhobashGroup", "Ghobash Group", "Conglomerate IT", "Data & AI / services engineer roles (Dubai)"),
+ ash("syndica", "Syndica", "Crypto infra", "Rust/Go SE 3+ yrs (Dubai)", loc="Dubai|Abu Dhabi|Sharjah|United Arab Emirates"),
+ sr("DeliveryHero", "Delivery Hero (talabat)", "Consumer tech", ENTRY + "SE I Backend, SE Emirati-only, SE II (Dubai); .NET/Go/C# stacks", search="Dubai", loc="Dubai|Abu Dhabi|Sharjah|United Arab Emirates"),
+ sr("EtihadAirways5", "Etihad Airways", "Aviation", SENIOR + "Software Development Lead (Abu Dhabi)", search="United Arab Emirates", loc="Dubai|Abu Dhabi|Sharjah|United Arab Emirates"),
+ sr("masdar", "Masdar", "Energy", "Abu Dhabi roles", search="United Arab Emirates", loc="Dubai|Abu Dhabi|Sharjah|United Arab Emirates"),
+ sr("VAMS", "VAM Systems", "IT services (UAE)", "Java/MicroStrategy/other IT roles for UAE; sponsors visas", search="United Arab Emirates", loc="Dubai|Abu Dhabi|Sharjah|United Arab Emirates"),
+ sr("GhobashGroup", "Ghobash Group", "Conglomerate IT", "Data & AI / services engineer roles (Dubai)", search="United Arab Emirates", loc="Dubai|Abu Dhabi|Sharjah|United Arab Emirates"),
  ("https://apply.workable.com/bayutdubizzle/", "Bayut & dubizzle", "Proptech / classifieds", "Technology roles; Workable board", "", C),
  ("https://careers.deliveryhero.com", "Delivery Hero careers (talabat jobs)", "Consumer tech", "SE II Backend, Eng Managers (Dubai)", "", C),
  ("https://www.emiratesnbd.com/en/careers", "Emirates NBD", "Banking", "Software/data/digital roles; many programmes are UAE-national only", "", C),

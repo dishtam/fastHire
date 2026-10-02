@@ -26,10 +26,10 @@ public class LeverJobSource implements JobSource {
     @Override
     public List<RawJob> fetch(SourceRef src) throws IOException {
         String body = fetcher.get("https://api.lever.co/v0/postings/" + src.atsToken() + "?mode=json");
-        return parse(mapper.readTree(body), src.atsToken());
+        return parse(mapper.readTree(body), src);
     }
 
-    List<RawJob> parse(JsonNode root, String token) {
+    List<RawJob> parse(JsonNode root, SourceRef src) {
         List<RawJob> out = new ArrayList<>();
         for (JsonNode j : root) {
             String desc = j.path("descriptionPlain").asText("");
@@ -42,7 +42,7 @@ public class LeverJobSource implements JobSource {
             long created = j.path("createdAt").asLong(0);
             out.add(new RawJob(
                 j.path("id").asText(),
-                token,
+                Employer.name(src, src.atsToken()),
                 j.path("text").asText(),
                 j.path("categories").path("location").asText(null),
                 desc.trim(),

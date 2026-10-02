@@ -20,6 +20,18 @@ class SourceClassifierTest {
         assertThat(c.classify("https://job-boards.greenhouse.io/careem?location=Dubai|UAE").atsToken()).isEqualTo("careem");
     }
 
+    @Test void ashbyAndSmartRecruiters() {
+        assertThat(c.classify("https://jobs.ashbyhq.com/aiprise")).isEqualTo(new Classification(SourceKind.ATS, "ASHBY", "aiprise"));
+        assertThat(c.classify("https://jobs.ashbyhq.com/aiprise/3763c791-a387").atsToken()).isEqualTo("aiprise");
+        assertThat(c.classify("https://careers.smartrecruiters.com/servicenow?search=India"))
+            .isEqualTo(new Classification(SourceKind.ATS, "SMARTRECRUITERS", "servicenow"));
+        assertThat(c.classify("https://jobs.smartrecruiters.com/DeliveryHero/744000126976159-software-engineer").atsToken())
+            .isEqualTo("DeliveryHero");
+        assertThat(c.classify("https://jobs.smartrecruiters.com/oneclick-ui/company/BEUMERGroup1/publication/45bb").atsToken())
+            .isEqualTo("BEUMERGroup1");
+        assertThat(c.classify("https://jobs.smartrecruiters.com/").kind()).isEqualTo(SourceKind.UNSUPPORTED);
+    }
+
     @Test void lever() {
         assertThat(c.classify("https://jobs.lever.co/acme"))
             .isEqualTo(new Classification(SourceKind.ATS, "LEVER", "acme"));

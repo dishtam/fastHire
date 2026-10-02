@@ -1,0 +1,9 @@
+{"offset": 0, "limit": 100, "totalFound": 3, "content": [
+ {"id": "744000000000001", "name": "Software Engineer - Java", "refNumber": "REF-101", "releasedDate": "2026-09-25T08:00:00.000Z",
+  "company": {"identifier": "Acme", "name": "Acme Corp"},
+  "location": {"city": "Hyderabad", "region": "Telangana", "country": "in", "remote": false},
+  "department": {"id": "1", "label": "Engineering"}, "typeOfEmployment": {"id": "permanent", "label": "Full-time"},
+  "experienceLevel": {"id": "associate", "label": "Associate"}},
+ {"id": "744000000000002", "name": "Backend Engineer", "company": {"identifier": "Acme", "name": "Acme Corp"},
+  "location": {"city": "Dubai", "country": "ae", "remote": true}}
+]}
